@@ -6,7 +6,6 @@ import pexpect
 import getpass
 
 class user:
-    prompt   = "~>"
     home     = os.environ["HOME"]
     logs     = "%s/.nlihrc" % home
 
