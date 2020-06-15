@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import pexpect
+import getpass
+
+class user:
+    prompt   = "~>"
+    home     = os.environ["HOME"]
+    logs     = "%s/.nlihrc" % home
+
+    username   = None
+    password   = None
+    repository = None
+    user       = None
+    right      = None
+
+class blih:
+    base   = "blih -u"
+    create = "repository create"
+    rights = "repository setacl"
+    mouli  = "ramassage-tek"
+
+def color(c):
+    colors = {
+        "reset"  : "0",
+        "red"    : "1;31",
+        "green"  : "1;32",
+        "yellow" : "1;33",
+        "blue"   : "1;34",
+        "purple" : "1;35",
+        "cyan"   : "1;36"
+    }
+    return ("\033[%sm" % (colors.get("%s" % c)))
+
+def status(s):
+    statuses = {
+        "working" : "[%s----%s]" % (color("cyan"), color("reset")),
+        "input"   : "   %s~>%s " % (color("yellow"), color("reset")),
+        "ko"      : "[%s KO %s]" % (color("red"), color("reset")),
+        "ok"      : "[%s OK %s]" % (color("green"), color("reset")),
+        "info"    : "[%s ?? %s]" % (color("purple"), color("reset")),
+        "found"   : "[%s####%s]" % (color("yellow"), color("reset")),
+        "error"   : "   %sE:%s " % (color("red"), color("reset"))
+    }
+    return (statuses.get("%s" % s))
+
+def creation():
+    f = open(user.logs, 'w+')
+    username = input("%s Epitech's email: " % (status("input")))
+    f.write(username)
+    f.close()
+    print("%s Login session created" % (status("ok")))
+    print("%s Restart me now !%s" % (color("red"), color("reset")))
+
+def session():
+    f = open(user.logs, 'r')
+    user.username = f.read().split('\n')[0]
+    f.close()
+
+def login():
+    if os.path.exists(user.logs):
+        return (1)
+    else:
+        print("%s Generating your session" % (status("ok")))
+        return(0)
+
+def launch():
+    if login() == 0:
+        creation()
+        return (0)
+    else:
+        session()
+        nlih()
+        return (0)
+
+def security(url):
+    child = pexpect.spawn(url)
+    child.timeout = 30
+    child.expect('Password: ')
+    child.sendline(user.password)
+    child.expect(pexpect.EOF)
+    child.close()
+
+def r_update():
+    if user.repository != None:
+        print("%s previous creation: '%s%s%s'" % (status("info"), color("purple"), user.repository, color("reset")))
+        choice = input("%s Do you want to use the last repository created ? [Y|n]: " % (status("input")))
+        if choice != 'Y':
+            user.repository = None
+    if user.repository == None:
+        user.repository = input("%s Repository name: " % status("input"))
+
+def b_create():
+    user.repository = input("%s Repository name: " % status("input"))
+    url = "%s %s %s %s" % (blih.base, user.username, blih.create, user.repository)
+    security(url)
+    choice = input("%s Do you want to add the ramassage-tek ? [Y|n]: " % status("info"))
+    if choice == 'Y':
+        b_mouli()
+
+def b_mouli():
+    url = "%s %s %s %s %s %s" % (blih.base, user.username, blih.rights, user.repository, blih.mouli, 'r')
+    security(url)
+
+def b_right():
+    r_update()
+    user.user = input("%s User name: " % status("input"))
+    user.right = input("%s Rights: " % status("input"))
+
+    if user.right == "mouli":
+        user.right = blih.mouli
+
+    url = "%s %s %s %s %s %s" % (blih.base, user.username, blih.rights, user.repository, user.user, user.right)
+    security(url)
+
+def b_clone():
+    r_update()
+    user.user = input("%s User name: " % status("input"))
+    try:
+        os.system("git clone git@git.epitech.eu:/%s/%s" % (user.user, user.repository))
+    except:
+        print("%s Something wrong happenned" % (status("error")))
+
+def nlih():
+    command = None
+
+    print("Welcome %s%s%s" % (color("green"), user.username, color("reset")))
+    user.password = getpass.getpass("Session password: ")
+    print('')
+
+    while command != "exit":
+        if command == "create":
+            b_create()
+        elif command == "right":
+            b_right()
+        elif command == "clone":
+            b_clone()
+        elif command != None:
+            print("%s Command not found" % status("error"))
+        command = input("%s " % status("input"))
+
+launch()
