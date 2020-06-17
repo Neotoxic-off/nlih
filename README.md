@@ -16,6 +16,16 @@ sudo cp nlih /usr/bin/
 nlih
 ```
 
+## FAST CREATION:
+
+```
+nlih <repository>
+```
+
+This will create the repository on your own git
+Add rights for the ramassage-tek
+And clone the repository
+
 ### Commands
 ```
 create : create repository on epitech's git 
@@ -29,3 +39,4 @@ clone  : clone the repository
 - Easier to use
 - Assisted
 - Auto ramassage-tek rights
+- Fast creation

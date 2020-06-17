@@ -35,13 +35,14 @@ def color(c):
 
 def status(s):
     statuses = {
-        "working" : "[%s----%s]" % (color("cyan"), color("reset")),
+        "working" : "[%s----%s]" % (color("cyan"),   color("reset")),
         "input"   : "   %s~>%s " % (color("yellow"), color("reset")),
-        "ko"      : "[%s KO %s]" % (color("red"), color("reset")),
-        "ok"      : "[%s OK %s]" % (color("green"), color("reset")),
+        "ko"      : "[%s KO %s]" % (color("red"),    color("reset")),
+        "ok"      : "[%s OK %s]" % (color("green"),  color("reset")),
         "info"    : "[%s ?? %s]" % (color("purple"), color("reset")),
         "found"   : "[%s####%s]" % (color("yellow"), color("reset")),
-        "error"   : "   %sE:%s " % (color("red"), color("reset"))
+        "error"   : "   %sE:%s " % (color("red"),    color("reset")),
+        "fast"    : "%s⚡️%s" % (color("yellow"), color("reset"))
     }
     return (statuses.get("%s" % s))
 
@@ -53,7 +54,7 @@ def creation():
     print("%s Login session created" % (status("ok")))
     print("%s Restart me now !%s" % (color("red"), color("reset")))
 
-def session():
+def connect():
     f = open(user.logs, 'r')
     user.username = f.read().split('\n')[0]
     f.close()
@@ -65,12 +66,23 @@ def login():
         print("%s Generating your session" % (status("ok")))
         return(0)
 
+def fast():
+    try:
+        print("   %s Fast mod detected: '%s%s%s' %s\n" % (status("fast"), color("purple"), user.repository, color("reset"), status("fast")))
+        create = "%s %s %s %s" % (blih.base, user.username, blih.create, user.repository)
+        clone  ="git clone git@git.epitech.eu:/%s/%s" % (user.username, user.repository)
+        security(create)
+        b_mouli()
+        os.system(clone)
+    except:
+        print("%s Something wrong happenned" % (status("error")))
+
 def launch():
     if login() == 0:
         creation()
         return (0)
     else:
-        session()
+        connect()
         nlih()
         return (0)
 
@@ -129,15 +141,19 @@ def nlih():
     user.password = getpass.getpass("Session password: ")
     print('')
 
-    while command != "exit":
-        if command == "create":
-            b_create()
-        elif command == "right":
-            b_right()
-        elif command == "clone":
-            b_clone()
-        elif command != None:
-            print("%s Command not found" % status("error"))
-        command = input("%s " % status("input"))
+    if len(sys.argv) != 2:
+        while command != "exit":
+            if command == "create":
+                b_create()
+            elif command == "right":
+                b_right()
+            elif command == "clone":
+                b_clone()
+            elif command != None:
+                print("%s Command not found" % status("error"))
+            command = input("%s " % status("input"))
+    else:
+        user.repository = sys.argv[1]
+        fast()
 
 launch()
