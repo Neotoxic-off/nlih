@@ -1,5 +1,5 @@
 # nlih
-⚡️ Faster than blih
+⚡️ Faster than blih ⚡️
 
 ## Install:
 
