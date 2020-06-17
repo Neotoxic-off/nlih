@@ -46,6 +46,15 @@ def status(s):
     }
     return (statuses.get("%s" % s))
 
+def helpme(h):
+    content = {
+        "create" : "create repository on git epitech",
+        "right"  : " add right of the repository",
+        "clone"  : " clone the repository",
+        "help"   : "  display help you need"
+    }
+    return (content.get("%s" % h))
+
 def creation():
     f = open(user.logs, 'w+')
     username = input("%s Epitech's email: " % (status("input")))
@@ -134,6 +143,14 @@ def b_clone():
     except:
         print("%s Something wrong happenned" % (status("error")))
 
+def b_help():
+    i = 0
+    content = ["create", "right", "clone", "help"]
+
+    while i < len(content):
+        print("       %s%s%s %s" % (color("cyan"), content[i], color("reset"), helpme(content[i])))
+        i += 1
+
 def nlih():
     command = None
 
@@ -149,6 +166,8 @@ def nlih():
                 b_right()
             elif command == "clone":
                 b_clone()
+            elif command == "help":
+                b_help()
             elif command != None:
                 print("%s Command not found" % status("error"))
             command = input("%s " % status("input"))
