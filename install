@@ -1,0 +1,34 @@
+#!/bin/bash
+
+check()
+{
+    src="nlih"
+    if [[ ! -f "/usr/bin/$src" ]]; then
+        printf "Status..........: Installing\n"
+        sudo chmod +x $src && sudo cp $src /usr/bin/
+        if [[ -f "/usr/bin/$src" ]]; then
+            printf "Status..........: Installed\n"
+            printf "Path..........: /usr/bin/$src\n"
+        else
+            printf "Status..........: Not installed\n"
+        fi
+    else
+        printf "Status..........: Installed\n"
+        printf "Path..........: /usr/bin/$src\n"
+        printf "Do you want to update [y/n]\n"
+        printf "Choice..........: "
+        read update
+        if [[ $update == "y" || $update == "Y" ]]; then
+            sudo rm /usr/bin/$src
+            sudo chmod +x $src && sudo cp $src /usr/bin/
+            if [[ -f "/usr/bin/$src" ]]; then
+                printf "Status..........: Installed\n"
+                printf "Path..........: /usr/bin/$src\n"
+            else
+                printf "Status..........: Not installed\n"
+            fi
+        fi
+    fi
+}
+
+check

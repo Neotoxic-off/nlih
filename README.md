@@ -10,6 +10,15 @@ sudo chmod +x nlih
 sudo cp nlih /usr/bin/ 
 ```
 
+### OR
+
+```
+git clone https://github.com/Neotoxic-off/nlih
+cd nlih
+chmod +x install
+./install
+```
+
 ## Usage:
 
 ```
