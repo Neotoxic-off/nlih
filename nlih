@@ -98,7 +98,7 @@ def r_update():
     if user.repository != None:
         print("%s previous creation: '%s%s%s'" % (status("info"), color("purple"), user.repository, color("reset")))
         choice = input("%s Do you want to use the last repository created ? [Y|n]: " % (status("input")))
-        if choice != 'Y':
+        if choice != 'Y' or choice != 'y':
             user.repository = None
     if user.repository == None:
         user.repository = input("%s Repository name: " % status("input"))
@@ -108,7 +108,7 @@ def b_create():
     url = "%s %s %s %s" % (blih.base, user.username, blih.create, user.repository)
     security(url)
     choice = input("%s Do you want to add the ramassage-tek ? [Y|n]: " % status("info"))
-    if choice == 'Y':
+    if choice == 'Y' or choice == 'y':
         b_mouli()
 
 def b_mouli():

@@ -22,9 +22,9 @@ nlih
 nlih <repository>
 ```
 
-This will create the repository on your own git
-Add rights for the ramassage-tek
-And clone the repository
+- This will create the repository on your own git
+- Add rights for the ramassage-tek
+- And clone the repository
 
 ### Commands
 ```
