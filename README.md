@@ -35,7 +35,7 @@ nlih <repository>
 - Add rights for the ramassage-tek
 - And clone the repository
 
-
+<img src = "https://raw.githubusercontent.com/Neotoxic-off/nlih/master/img/fast.gif">
 
 ### Commands
 ```
