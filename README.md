@@ -13,7 +13,7 @@ sudo cp nlih /usr/bin/
 ## Usage:
 
 ```
-./nlih
+nlih
 ```
 
 ### Commands
