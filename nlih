@@ -18,6 +18,7 @@ class user:
 class blih:
     base   = "blih -u"
     create = "repository create"
+    delete = "repository delete"
     rights = "repository setacl"
     mouli  = "ramassage-tek"
 
@@ -49,6 +50,7 @@ def status(s):
 def helpme(h):
     content = {
         "create" : "create repository on git epitech",
+        "delete" : "delete repository on git epitech",
         "right"  : " add right of the repository",
         "clone"  : " clone the repository",
         "help"   : "  display help you need"
@@ -120,6 +122,11 @@ def b_create():
     if choice == 'Y' or choice == 'y':
         b_mouli()
 
+def b_delete():
+    user.repository = input("%s Repository name: " % status("input"))
+    url = "%s %s %s %s" % (blih.base, user.username, blih.delete, user.repository)
+    security(url)
+
 def b_mouli():
     url = "%s %s %s %s %s %s" % (blih.base, user.username, blih.rights, user.repository, blih.mouli, 'r')
     security(url)
@@ -162,6 +169,8 @@ def nlih():
         while command != "exit":
             if command == "create":
                 b_create()
+            elif command == "delete":
+                b_delete()
             elif command == "right":
                 b_right()
             elif command == "clone":

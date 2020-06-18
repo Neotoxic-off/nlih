@@ -39,7 +39,8 @@ nlih <repository>
 
 ### Commands
 ```
-create : create repository on epitech's git 
+create : create repository on epitech's git
+delete : delete repository on epitech's git
 right  : manage the rights
 clone  : clone the repository
 ```
